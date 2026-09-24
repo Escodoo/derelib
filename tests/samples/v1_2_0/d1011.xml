@@ -1,0 +1,331 @@
+<DeRE xmlns="http://www.dere.gov.br/schemas/evtPGCC/v1_0_3">
+  <evtPGCC id="DeRE10111000000000000002026092416100800001">
+    <ideEvento>
+      <tpOper>1</tpOper>
+      <tpAmb>2</tpAmb>
+      <aplicEmi>1</aplicEmi>
+      <verAplic>derelib-0.1.0</verAplic>
+    </ideEvento>
+    <ideContrib>
+      <nrInsc>00000000</nrInsc>
+    </ideContrib>
+    <idePeriodo>
+      <iniValid>2026-10-01</iniValid>
+    </idePeriodo>
+    <infoPGCC>
+      <planoCtaRef>2</planoCtaRef>
+      <freqEncerr>M</freqEncerr>
+      <infoContas>
+        <infoConta>
+          <cCta>1000</cCta>
+          <cCtaInterna>1</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>ATIVO</nomeCta>
+          <indCta>S</indCta>
+          <descCta>ATIVO</descCta>
+          <cCtaRef>1</cCtaRef>
+          <nivelCta>1</nivelCta>
+          <natCta>D</natCta>
+          <codNat>1</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>3000</cCta>
+          <cCtaInterna>3</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>RECEITAS</nomeCta>
+          <indCta>S</indCta>
+          <descCta>RECEITAS</descCta>
+          <cCtaRef>3</cCtaRef>
+          <nivelCta>1</nivelCta>
+          <natCta>C</natCta>
+          <codNat>4</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>13000</cCta>
+          <cCtaInterna>13</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>ATIVO NÃO CIRCULANTE</nomeCta>
+          <indCta>S</indCta>
+          <descCta>ATIVO NÃO CIRCULANTE</descCta>
+          <cCtaSup>1000</cCtaSup>
+          <cCtaRef>13</cCtaRef>
+          <nivelCta>2</nivelCta>
+          <natCta>D</natCta>
+          <codNat>1</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>31000</cCta>
+          <cCtaInterna>31</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>RECEITAS COM OPERAÇÕES DE ASSISTÊNCIA A SAÚDE</nomeCta>
+          <indCta>S</indCta>
+          <descCta>RECEITAS COM OPERAÇÕES DE ASSISTÊNCIA A SAÚDE</descCta>
+          <cCtaSup>3000</cCtaSup>
+          <cCtaRef>31</cCtaRef>
+          <nivelCta>2</nivelCta>
+          <natCta>C</natCta>
+          <codNat>4</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>132000</cCta>
+          <cCtaInterna>132</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>INVESTIMENTOS</nomeCta>
+          <indCta>S</indCta>
+          <descCta>INVESTIMENTOS</descCta>
+          <cCtaSup>13000</cCtaSup>
+          <cCtaRef>132</cCtaRef>
+          <nivelCta>3</nivelCta>
+          <natCta>D</natCta>
+          <codNat>1</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>311000</cCta>
+          <cCtaInterna>311</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>CONTRAPRESTAÇÕES LÍQUIDAS / PRÊMIOS RETIDOS</nomeCta>
+          <indCta>S</indCta>
+          <descCta>CONTRAPRESTAÇÕES LÍQUIDAS / PRÊMIOS RETIDOS</descCta>
+          <cCtaSup>31000</cCtaSup>
+          <cCtaRef>311</cCtaRef>
+          <nivelCta>3</nivelCta>
+          <natCta>C</natCta>
+          <codNat>4</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>1328000</cCta>
+          <cCtaInterna>1328</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>OUTROS INVESTIMENTOS</nomeCta>
+          <indCta>S</indCta>
+          <descCta>OUTROS INVESTIMENTOS</descCta>
+          <cCtaSup>132000</cCtaSup>
+          <cCtaRef>1328</cCtaRef>
+          <nivelCta>4</nivelCta>
+          <natCta>D</natCta>
+          <codNat>1</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>3111000</cCta>
+          <cCtaInterna>3111</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>CONTRAPRESTAÇÕES EMITIDAS / PRÊMIOS EMITIDOS DE ASSISTÊNCIA A SAÚDE</nomeCta>
+          <indCta>S</indCta>
+          <descCta>CONTRAPRESTAÇÕES EMITIDAS / PRÊMIOS EMITIDOS DE ASSISTÊNCIA A SAÚDE</descCta>
+          <cCtaSup>311000</cCtaSup>
+          <cCtaRef>3111</cCtaRef>
+          <nivelCta>4</nivelCta>
+          <natCta>C</natCta>
+          <codNat>4</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>13281000</cCta>
+          <cCtaInterna>13281</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>OUTROS INVESTIMENTOS</nomeCta>
+          <indCta>S</indCta>
+          <descCta>OUTROS INVESTIMENTOS</descCta>
+          <cCtaSup>1328000</cCtaSup>
+          <cCtaRef>13281</cCtaRef>
+          <nivelCta>5</nivelCta>
+          <natCta>D</natCta>
+          <codNat>1</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>31111000</cCta>
+          <cCtaInterna>31111</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>CONTRAPRESTAÇÕES EMITIDAS / PRÊMIOS EMITIDOS DE ASSISTÊNCIA MÉDICO-HOSPITALAR</nomeCta>
+          <indCta>S</indCta>
+          <descCta>CONTRAPRESTAÇÕES EMITIDAS / PRÊMIOS EMITIDOS DE ASSISTÊNCIA MÉDICO-HOSPITALAR</descCta>
+          <cCtaSup>3111000</cCtaSup>
+          <cCtaRef>31111</cCtaRef>
+          <nivelCta>5</nivelCta>
+          <natCta>C</natCta>
+          <codNat>4</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>132819000</cCta>
+          <cCtaInterna>132819</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>Outros Investimentos</nomeCta>
+          <indCta>S</indCta>
+          <descCta>Outros Investimentos</descCta>
+          <cCtaSup>13281000</cCtaSup>
+          <cCtaRef>132819</cCtaRef>
+          <nivelCta>6</nivelCta>
+          <natCta>D</natCta>
+          <codNat>1</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>311111000</cCta>
+          <cCtaInterna>311111</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>Cobertura Assistencial com Preço Preestabelecido</nomeCta>
+          <indCta>S</indCta>
+          <descCta>Cobertura Assistencial com Preço Preestabelecido</descCta>
+          <cCtaSup>31111000</cCtaSup>
+          <cCtaRef>311111</cCtaRef>
+          <nivelCta>6</nivelCta>
+          <natCta>C</natCta>
+          <codNat>4</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>311112000</cCta>
+          <cCtaInterna>311112</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>Cobertura Assistencial com Preço Pós Estabelecido</nomeCta>
+          <indCta>S</indCta>
+          <descCta>Cobertura Assistencial com Preço Pós Estabelecido</descCta>
+          <cCtaSup>31111000</cCtaSup>
+          <cCtaRef>311112</cCtaRef>
+          <nivelCta>6</nivelCta>
+          <natCta>C</natCta>
+          <codNat>4</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>13281901000</cCta>
+          <cCtaInterna>13281901</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>Títulos Patrimoniais</nomeCta>
+          <indCta>S</indCta>
+          <descCta>Títulos Patrimoniais</descCta>
+          <cCtaSup>132819000</cCtaSup>
+          <cCtaRef>13281901</cCtaRef>
+          <nivelCta>7</nivelCta>
+          <natCta>D</natCta>
+          <codNat>1</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>31111101000</cCta>
+          <cCtaInterna>31111101</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>Planos Individuais/Familiares antes da Lei</nomeCta>
+          <indCta>S</indCta>
+          <descCta>Planos Individuais/Familiares antes da Lei</descCta>
+          <cCtaSup>311111000</cCtaSup>
+          <cCtaRef>31111101</cCtaRef>
+          <nivelCta>7</nivelCta>
+          <natCta>C</natCta>
+          <codNat>4</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>31111203000</cCta>
+          <cCtaInterna>31111203</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>Planos Coletivos por Adesão antes da Lei</nomeCta>
+          <indCta>S</indCta>
+          <descCta>Planos Coletivos por Adesão antes da Lei</descCta>
+          <cCtaSup>311112000</cCtaSup>
+          <cCtaRef>31111203</cCtaRef>
+          <nivelCta>7</nivelCta>
+          <natCta>C</natCta>
+          <codNat>4</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>132819011000</cCta>
+          <cCtaInterna>132819011</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>Títulos Patrimoniais</nomeCta>
+          <indCta>S</indCta>
+          <descCta>Títulos Patrimoniais</descCta>
+          <cCtaSup>13281901000</cCtaSup>
+          <cCtaRef>132819011</cCtaRef>
+          <nivelCta>8</nivelCta>
+          <natCta>D</natCta>
+          <codNat>1</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>311111011000</cCta>
+          <cCtaInterna>311111011</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>Planos Individuais/Familiares antes da Lei</nomeCta>
+          <indCta>S</indCta>
+          <descCta>Planos Individuais/Familiares antes da Lei</descCta>
+          <cCtaSup>31111101000</cCtaSup>
+          <cCtaRef>311111011</cCtaRef>
+          <nivelCta>8</nivelCta>
+          <natCta>C</natCta>
+          <codNat>4</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>311112033000</cCta>
+          <cCtaInterna>311112033</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>Planos Coletivos por Adesão antes da Lei</nomeCta>
+          <indCta>S</indCta>
+          <descCta>Planos Coletivos por Adesão antes da Lei</descCta>
+          <cCtaSup>31111203000</cCtaSup>
+          <cCtaRef>311112033</cCtaRef>
+          <nivelCta>8</nivelCta>
+          <natCta>C</natCta>
+          <codNat>4</codNat>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>13281901108000</cCta>
+          <cCtaInterna>13281901108</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>Outros Investimentos</nomeCta>
+          <indCta>A</indCta>
+          <descCta>Outros Investimentos</descCta>
+          <cCtaSup>132819011000</cCtaSup>
+          <cCtaRef>13281901108</cCtaRef>
+          <nivelCta>9</nivelCta>
+          <natCta>D</natCta>
+          <codNat>1</codNat>
+          <codTrib>120110007</codTrib>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>31111101101000</cCta>
+          <cCtaInterna>31111101101</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>Contraprestação Emitida</nomeCta>
+          <indCta>A</indCta>
+          <descCta>Contraprestação Emitida</descCta>
+          <cCtaSup>311111011000</cCtaSup>
+          <cCtaRef>31111101101</cCtaRef>
+          <nivelCta>9</nivelCta>
+          <natCta>C</natCta>
+          <codNat>4</codNat>
+          <codTrib>120110001</codTrib>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+        <infoConta>
+          <cCta>31111203306000</cCta>
+          <cCtaInterna>31111203306</cCtaInterna>
+          <cDbrMista>000</cDbrMista>
+          <nomeCta>Taxa de Administração</nomeCta>
+          <indCta>A</indCta>
+          <descCta>Taxa de Administração</descCta>
+          <cCtaSup>311112033000</cCtaSup>
+          <cCtaRef>120110006</cCtaRef>
+          <nivelCta>9</nivelCta>
+          <natCta>C</natCta>
+          <codNat>4</codNat>
+          <codTrib>120110006</codTrib>
+          <iniVig>2026-10-01</iniVig>
+        </infoConta>
+      </infoContas>
+    </infoPGCC>
+  </evtPGCC>
+</DeRE>

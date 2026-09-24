@@ -1,0 +1,19 @@
+<DeRE xmlns="http://www.dere.gov.br/schemas/evtAplicResTec/v1_0_0">
+  <evtAplicResTec id="DeRE11062000000000000002026100100000000001">
+    <ideEvento>
+      <tpOper>1</tpOper>
+      <tpAmb>2</tpAmb>
+      <aplicEmi>1</aplicEmi>
+      <verAplic>derelib-0.1.0</verAplic>
+    </ideEvento>
+    <ideContrib>
+      <nrInsc>00000000</nrInsc>
+    </ideContrib>
+    <idePeriodo>
+      <perApur>2026-10</perApur>
+    </idePeriodo>
+    <infoAplicResTec>
+      <semAplic>1</semAplic>
+    </infoAplicResTec>
+  </evtAplicResTec>
+</DeRE>

@@ -1,0 +1,17 @@
+<DeRE xmlns="http://www.dere.gov.br/schemas/envioLoteDere/v1_0_1"><loteEventos><ideContrib><nrInsc>00000000</nrInsc></ideContrib><eventos><evento id="DeRE10011000000000000002026092416100700001"><DeRE xmlns="http://www.dere.gov.br/schemas/evtInfoContrib/v1_0_1"><evtInfoContrib id="DeRE10011000000000000002026092416100700001"><ideEvento><tpOper>1</tpOper><tpAmb>2</tpAmb><aplicEmi>1</aplicEmi><verAplic>derelib-0.1.0</verAplic></ideEvento><ideContrib><nrInsc>00000000</nrInsc></ideContrib><idePeriodo><iniValid>2026-10-01</iniValid></idePeriodo><infoContrib><regTribPrinc>2</regTribPrinc><indNatTrib>0</indNatTrib><plAssistSaude><tpAtividades><tpAtividade>02A</tpAtividade></tpAtividades></plAssistSaude></infoContrib></evtInfoContrib><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><ds:Reference URI="#DeRE10011000000000000002026092416100700001"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>CZay3miffAt8xToZcsuM+UIVwL09trky80js+lcG5ok=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>iO6fxm6OTBSxZExi2sKyqLCM1Hjmg672UveAJ/rTZguikjfYI0X3PbIyM3jBCqQe5ZbqoLlbF1jhV9DP4FnM2SZnJWdtg8wyyfqY2zXrcCEKURz0rC4A4ydLJaxUiu9zktF8yxhcFQ6/CeHztvAKbIV68hbIoBRYhrvpnkCPqXLZ5h0kkBnBkTNnVjYwV+LC+JWaZiTrSUOjUzsPvZXqcpo4DbrjKtny844yq5HweSIFD7uBA6ozzMNrjjhYB47jiTiZhyHJo/laVZNYKqD8DsDwe0vRTiMqU1Ux5la/o975NicfmfkxTWSPfMu4TmT8RVVfJzqruSyCsedHuKQMQA==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIC0TCCAbmgAwIBAgICB9kwDQYJYIZIAWUDBAMQBQAwJzEYMBYGA1UEAwwPRU1J
+U1NPUiBBIFRFU1RFMQswCQYDVQQGEwJCUjAeFw0yNjA5MjMyMDA3MjlaFw0yNzA5
+MjMyMDA3MjlaMDAxITAfBgNVBAMMGENFUlRJRklDQURPIFZBTElETyBURVNURTEL
+MAkGA1UEBhMCQlIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDAcpXG
+Ag4bKA/xGB2NZhPhTIpK7aoBoszRDvIYLs5bgDkTUl1EMhifH3kEZAo4kZ30Qfrs
+AcMGfm1/PwNpZE1J7hFXHocl6jBn4YhKPHGWyNnu7FYz3fmTPBK7o/Ea81J7WhFM
+pjBf7mgQVOHVQxK0kXS6j4v8EgyMkXlbmE8/+nH/opvTRVjX9TW7HdY/v5ZsTV6K
+zVu3WwJZt7Vj9hGc86BE5wNpBGGBNi4a18DaGlgJJDcDJhwOcbQwl2t1XodRVxBr
+w2Nl0aFKWy6ChFaEYxO620QlwL9m56sTsp4n2OBgj/9xXqjI6DxNII0B4cVSdqPa
+/2v9xuiBsXkK3chDAgMBAAEwDQYJYIZIAWUDBAMQBQADggEBACaQHhb5N25exKfy
+u4YPVz4jz9oR8gKNMtpVgSVX9lPO7WzIPDV3V0jCQ/i/m5lCfcRN1xyxEqFG9SFG
+v2Dk0ohh4rRzjNEVu/CTW/kd/BHJjt35G3T0u/VOVRiWcHo4FAhWUj1nAgmFbB5c
+czyliJjVRBf/8El/5iukefDqu96litEFBFYsfoSXwhq1xdqagjWVKao7hWc7u4qx
+SXSUsHMZIBq5wk6wzzbsXfJ3cfEsYGYzF2MijgymZ9Avm3bVp6MtaQUiT7rAX+kJ
+/Vpcaric+nrw/uWuG7wXVZfA++FdnJ4C9//Qba/8//IUcISFEgGVHH8tqWA28U/3
+thQSyRg=
+</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></DeRE></evento></eventos></loteEventos></DeRE>

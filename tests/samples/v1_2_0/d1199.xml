@@ -1,0 +1,16 @@
+<DeRE xmlns="http://www.dere.gov.br/schemas/evtFechMensal/v0_0_2">
+  <evtFechMensal id="DeRE11991000000000000002026092416250700001">
+    <ideEvento>
+      <tpOper>1</tpOper>
+      <tpAmb>2</tpAmb>
+      <aplicEmi>1</aplicEmi>
+      <verAplic>derelib-0.1.0</verAplic>
+    </ideEvento>
+    <ideContrib>
+      <nrInsc>00000000</nrInsc>
+    </ideContrib>
+    <idePeriodo>
+      <perApur>2026-10</perApur>
+    </idePeriodo>
+  </evtFechMensal>
+</DeRE>

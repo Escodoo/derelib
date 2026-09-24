@@ -1,0 +1,19 @@
+<DeRE xmlns="http://www.dere.gov.br/schemas/evtReabertMensal/v0_0_1">
+  <evtReabertMensal id="DeRE11982000000000000002026100100000000001">
+    <ideEvento>
+      <tpOper>1</tpOper>
+      <tpAmb>2</tpAmb>
+      <aplicEmi>1</aplicEmi>
+      <verAplic>derelib-0.1.0</verAplic>
+    </ideEvento>
+    <ideContrib>
+      <nrInsc>00000000</nrInsc>
+    </ideContrib>
+    <idePeriodo>
+      <perApur>2026-10</perApur>
+    </idePeriodo>
+    <infoReabertura>
+      <nrReciboReab>1199-202610-0000000000000000000</nrReciboReab>
+    </infoReabertura>
+  </evtReabertMensal>
+</DeRE>

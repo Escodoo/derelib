@@ -1,0 +1,106 @@
+[build-system]
+requires = ["setuptools>=61.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "derelib"
+description = "derelib: xsdata binding for the Brazilian DeRE layout"
+authors = [
+    {name = "Escodoo", email = "contato@escodoo.com.br"},
+]
+license = {text = "MIT"}
+classifiers = [
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Topic :: Office/Business :: Financial :: Accounting",
+]
+keywords = ["DeRE", "e-invoicing", "Brazil", "xsdata"]
+requires-python = ">=3.10"
+dependencies = [
+    "lxml",
+    "xsdata",
+]
+dynamic = ["version"]
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.urls]
+Homepage = "https://github.com/Escodoo/derelib"
+Source = "https://github.com/Escodoo/derelib"
+Changelog = "https://github.com/Escodoo/derelib/blob/main/CHANGELOG.md"
+
+[project.optional-dependencies]
+sign = [
+    "signxml",
+    "cryptography",
+]
+test = [
+    "pytest",
+    "pytest-cov",
+    "signxml",
+    "cryptography",
+]
+
+[tool.setuptools]
+include-package-data = true
+license-files = ["LICENSE"]
+
+[tool.setuptools.dynamic]
+version = {attr = "derelib.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["derelib*"]
+
+[tool.setuptools.package-data]
+derelib = ["schemas/**/*.xsd", "py.typed"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+exclude = ["derelib/bindings"]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "UP",
+    "B",
+    "I",
+    "C4",
+    "SIM",
+]
+ignore = [
+    "E501",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B018"]
+
+[tool.ruff.format]
+line-ending = "lf"
+
+[tool.pytest.ini_options]
+addopts = "--color=yes --cov=derelib --cov-report=term-missing --cov-fail-under=90"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+omit = [
+    "derelib/bindings/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+]

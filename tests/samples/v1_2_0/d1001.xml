@@ -1,0 +1,25 @@
+<DeRE xmlns="http://www.dere.gov.br/schemas/evtInfoContrib/v1_0_1">
+  <evtInfoContrib id="DeRE10011000000000000002026092416100700001">
+    <ideEvento>
+      <tpOper>1</tpOper>
+      <tpAmb>2</tpAmb>
+      <aplicEmi>1</aplicEmi>
+      <verAplic>derelib-0.1.0</verAplic>
+    </ideEvento>
+    <ideContrib>
+      <nrInsc>00000000</nrInsc>
+    </ideContrib>
+    <idePeriodo>
+      <iniValid>2026-10-01</iniValid>
+    </idePeriodo>
+    <infoContrib>
+      <regTribPrinc>2</regTribPrinc>
+      <indNatTrib>0</indNatTrib>
+      <plAssistSaude>
+        <tpAtividades>
+          <tpAtividade>02A</tpAtividade>
+        </tpAtividades>
+      </plAssistSaude>
+    </infoContrib>
+  </evtInfoContrib>
+</DeRE>

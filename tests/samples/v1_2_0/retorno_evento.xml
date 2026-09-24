@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DeRE xmlns="http://www.dere.gov.br/schemas/evtRetornoTabela/v1_0_1">
+  <evtRetornoTabela>
+    <ideStatus>
+      <cdRetorno>0</cdRetorno>
+      <descRetorno>Erro</descRetorno>
+    </ideStatus>
+    <ocorrencias>
+      <codigo>12</codigo>
+      <descricao>Invalid activity</descricao>
+      <tipo>1</tipo>
+      <localizacao>plAssistSaude</localizacao>
+    </ocorrencias>
+  </evtRetornoTabela>
+</DeRE>
