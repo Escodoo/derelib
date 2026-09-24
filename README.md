@@ -1,5 +1,8 @@
 # derelib
 
+[![CI](https://github.com/Escodoo/derelib/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Escodoo/derelib/actions/workflows/ci.yml?query=branch%3Amain)
+[![codecov](https://codecov.io/gh/Escodoo/derelib/branch/main/graph/badge.svg)](https://codecov.io/gh/Escodoo/derelib)
+
 Python binding for the official Brazilian **DeRE** (Declaração Eletrônica de
 Regimes Específicos) layout 1.2.0.
 
@@ -20,12 +23,12 @@ pip install derelib[sign]   # XML-DSig helpers (signxml)
 
 ## Scope
 
-| Included                               | Not included                      |
-| -------------------------------------- | --------------------------------- |
-| Build / parse events, lots and returns | Choice of `tpOper`                |
-| XSD validation (unsigned and signed)   | MS1135 / MS1147 / PGCC checks     |
-| XML-DSig RSA-SHA256 signing            | Transmission to Receita Integra   |
-| NBR 5891 amount formatting             | Host-application data models      |
+| Included                               | Not included                    |
+| -------------------------------------- | ------------------------------- |
+| Build / parse events, lots and returns | Choice of `tpOper`              |
+| XSD validation (unsigned and signed)   | MS1135 / MS1147 / PGCC checks   |
+| XML-DSig RSA-SHA256 signing            | Transmission to Receita Integra |
+| NBR 5891 amount formatting             | Host-application data models    |
 
 Supported production helpers today: **D-1001, D-1011, D-1101, D-1106,
 D-1121, D-1198, D-1199**, lots and official returns. Transactional events
