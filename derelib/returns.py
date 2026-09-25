@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from lxml import etree
 
+from derelib.xml import fromstring
+
 RETURN_HEADER = {
     "ideStatus": ("cdRetorno", "descRetorno"),
     "infoRecEv": (
@@ -329,11 +331,7 @@ def parse_return(xml_content):
     ``seqEvento``, ``perApur``, ``extract`` (D-9001), ``totals``
     (D-9101 / D-9106), ``taxes`` (D-9199) and ``ocorrencias``.
     """
-    if isinstance(xml_content, bytes):
-        payload = xml_content
-    else:
-        payload = (xml_content or "").encode("utf-8")
-    root = etree.fromstring(payload)
+    root = fromstring(xml_content)
     lote = _lot_node(root)
     if lote is not None:
         return _parse_lot_return(lote)

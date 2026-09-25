@@ -53,3 +53,22 @@ def test_validate_against_schema_reports_errors():
 
 def test_invalid_lote_returns_errors():
     assert validate_lote("<DeRE/>")
+
+
+def test_parser_does_not_expand_entities():
+    from derelib.returns import parse_return
+    from derelib.xml import fromstring
+
+    xxe = (
+        '<?xml version="1.0"?>'
+        '<!DOCTYPE r [<!ENTITY a "AAAAAAAAAA"><!ENTITY b "&a;&a;&a;&a;">]>'
+        '<DeRE xmlns="http://www.dere.gov.br/schemas/evtRetornoTabela/v1_0_1">'
+        "<evtRetornoTabela><ideStatus><cdRetorno>&b;</cdRetorno></ideStatus>"
+        "</evtRetornoTabela></DeRE>"
+    )
+    root = fromstring(xxe)
+    node = root.find(
+        ".//{http://www.dere.gov.br/schemas/evtRetornoTabela/v1_0_1}cdRetorno"
+    )
+    assert not (node.text or "").startswith("AAAAAAAAAA")
+    assert parse_return(xxe)["cdRetorno"] != "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"

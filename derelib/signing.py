@@ -5,6 +5,7 @@ from __future__ import annotations
 from lxml import etree
 
 from derelib.events import DS_NS
+from derelib.xml import fromstring
 
 C14N_ALG = "http://www.w3.org/TR/2001/REC-xml-c14n-20010315"
 
@@ -17,12 +18,6 @@ def _require_signxml():
             "Install derelib[sign] to sign DeRE events (signxml is required)."
         ) from exc
     return XMLSigner, methods
-
-
-def _to_bytes(xml_content):
-    if isinstance(xml_content, bytes):
-        return xml_content
-    return (xml_content or "").encode("utf-8")
 
 
 def _strip_whitespace(root):
@@ -41,7 +36,7 @@ def sign_event(xml_content, key, cert_pem, reference):
     event ``id`` attribute (without the leading ``#``).
     """
     xml_signer, methods = _require_signxml()
-    root = _strip_whitespace(etree.fromstring(_to_bytes(xml_content)))
+    root = _strip_whitespace(fromstring(xml_content))
     signer = xml_signer(
         method=methods.enveloped,
         signature_algorithm="rsa-sha256",

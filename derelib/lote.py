@@ -5,6 +5,7 @@ from __future__ import annotations
 from lxml import etree
 
 from derelib.events import LOTE_NAMESPACE
+from derelib.xml import fromstring
 
 
 def build_lote(nr_insc, events):
@@ -23,6 +24,5 @@ def build_lote(nr_insc, events):
     for event in events:
         node = etree.SubElement(eventos, "evento", id=event["id"])
         xml = event["xml"]
-        payload = xml if isinstance(xml, bytes) else xml.encode("utf-8")
-        node.append(etree.fromstring(payload))
+        node.append(fromstring(xml))
     return etree.tostring(root, encoding="unicode")
