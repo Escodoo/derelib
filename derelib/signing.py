@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from lxml import etree
+from lxml.etree import _Element
 
 from derelib.events import DS_NS
 from derelib.xml import fromstring
@@ -10,7 +13,7 @@ from derelib.xml import fromstring
 C14N_ALG = "http://www.w3.org/TR/2001/REC-xml-c14n-20010315"
 
 
-def _require_signxml():
+def _require_signxml() -> tuple[Any, Any]:
     try:
         from signxml import XMLSigner, methods
     except ImportError as exc:  # pragma: no cover - optional extra
@@ -20,7 +23,7 @@ def _require_signxml():
     return XMLSigner, methods
 
 
-def _strip_whitespace(root):
+def _strip_whitespace(root: _Element) -> _Element:
     for element in root.iter("*"):
         if element.text is not None and not element.text.strip():
             element.text = None
@@ -29,7 +32,12 @@ def _strip_whitespace(root):
     return root
 
 
-def sign_event(xml_content, key, cert_pem, reference):
+def sign_event(
+    xml_content: bytes | str,
+    key: bytes | str,
+    cert_pem: bytes | str,
+    reference: str,
+) -> str:
     """Sign an event XML with RSA-SHA256.
 
     ``key`` and ``cert_pem`` are PEM bytes or strings. ``reference`` is the
@@ -61,7 +69,9 @@ def sign_event(xml_content, key, cert_pem, reference):
     return etree.tostring(signed_root, encoding="unicode")
 
 
-def sign_event_with_certificate(xml_content, certificado, reference):
+def sign_event_with_certificate(
+    xml_content: bytes | str, certificado: Any, reference: str
+) -> str:
     """Sign using an ``erpbrasil.assinatura`` certificate object."""
     cert_pem = certificado.cert_chave()[0]
     return sign_event(xml_content, certificado.key, cert_pem, reference)

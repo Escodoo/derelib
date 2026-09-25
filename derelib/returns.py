@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from lxml import etree
+from lxml.etree import _Element
 
 from derelib.xml import fromstring
 
@@ -70,14 +73,14 @@ RETURN_VALIDITY_FIELDS = (
 RETURN_GAP_FIELDS = ("iniLacuna", "fimLacuna")
 
 
-def _localname(element):
+def _localname(element: Any) -> str:
     tag = getattr(element, "tag", None)
     if not isinstance(tag, str):
         return ""
     return etree.QName(element).localname
 
 
-def _child(element, name):
+def _child(element: _Element | None, name: str) -> _Element | None:
     if element is None:
         return None
     for child in element.iterchildren(tag=etree.Element):
@@ -86,7 +89,7 @@ def _child(element, name):
     return None
 
 
-def _path(element, *names):
+def _path(element: _Element | None, *names: str) -> _Element | None:
     for name in names:
         element = _child(element, name)
         if element is None:
@@ -94,14 +97,14 @@ def _path(element, *names):
     return element
 
 
-def _path_text(element, *names):
+def _path_text(element: _Element | None, *names: str) -> str | None:
     element = _path(element, *names)
     if element is None or not element.text:
         return None
     return element.text.strip()
 
 
-def _children(element, name):
+def _children(element: _Element | None, name: str) -> list[_Element]:
     if element is None:
         return []
     return [
@@ -111,7 +114,7 @@ def _children(element, name):
     ]
 
 
-def _return_totals(node):
+def _return_totals(node: _Element | None) -> list[dict[str, str | None]]:
     info = _child(node, "infoEvento")
     balan = _child(info, "infoTotBalan")
     if balan is not None:
@@ -123,7 +126,7 @@ def _return_totals(node):
     return [{"vApurTot": total}] if total else []
 
 
-def _return_taxes(node):
+def _return_taxes(node: _Element | None) -> dict[str, Any]:
     info = _child(node, "infoEvento")
     lines = []
     for group, regime in RETURN_TAX_GROUPS.items():
@@ -140,7 +143,7 @@ def _return_taxes(node):
     return {"lines": lines, "total": total}
 
 
-def _return_receipts(node):
+def _return_receipts(node: _Element | None) -> dict[str, Any]:
     info_adic = _path(node, "infoEvento", "infoAdic")
     return {
         "nrReciboBalancete": _path_text(info_adic, "nrReciboBalancete"),
@@ -153,7 +156,7 @@ def _return_receipts(node):
     }
 
 
-def _return_extract(node):
+def _return_extract(node: _Element | None) -> dict[str, Any]:
     """Return the D-9001 validity photo, or {} when the group is absent."""
     extract = _child(node, "extratoEventos")
     if extract is None:
@@ -170,7 +173,7 @@ def _return_extract(node):
     }
 
 
-def _return_node(root):
+def _return_node(root: _Element) -> _Element | None:
     if _localname(root).startswith("evtRetorno"):
         return root
     if _localname(root) == "DeRE":
@@ -180,7 +183,7 @@ def _return_node(root):
     return None
 
 
-def _lot_node(root):
+def _lot_node(root: _Element) -> _Element | None:
     if _localname(root) == "retornoLoteEventos":
         return root
     if _localname(root) == "DeRE":
@@ -188,7 +191,7 @@ def _lot_node(root):
     return None
 
 
-def _empty_event():
+def _empty_event() -> dict[str, Any]:
     return {
         "id": None,
         "cdRetorno": None,
@@ -213,14 +216,14 @@ def _empty_event():
     }
 
 
-def _occurrence_vals(element):
+def _occurrence_vals(element: _Element) -> dict[str, str]:
     occurrence = {}
     for child in element:
         occurrence[_localname(child)] = (child.text or "").strip()
     return occurrence
 
 
-def _read_return_header(node, data):
+def _read_return_header(node: _Element, data: dict[str, Any]) -> dict[str, Any]:
     # D-9001 repeats nrRecibo inside extratoEventos, so the header must be
     # read from its own groups only.
     for group, names in RETURN_HEADER.items():
@@ -233,7 +236,7 @@ def _read_return_header(node, data):
     return data
 
 
-def _parse_event_return(root):
+def _parse_event_return(root: _Element) -> dict[str, Any]:
     data = _empty_event()
     envelope = root
     node = _return_node(root)
@@ -282,7 +285,7 @@ def _parse_event_return(root):
     return data
 
 
-def _lot_ocorrencias(status):
+def _lot_ocorrencias(status: _Element | None) -> list[dict[str, str]]:
     wrapper = _child(status, "ocorrencias")
     if wrapper is None:
         return []
@@ -297,7 +300,7 @@ def _lot_ocorrencias(status):
     return [occurrence] if occurrence and "codigo" in occurrence else []
 
 
-def _parse_lot_return(lote):
+def _parse_lot_return(lote: _Element) -> dict[str, Any]:
     """Keep only lot-envelope fields at the top level."""
     status = _child(lote, "status")
     recepcao = _child(lote, "dadosRecepcaoLote")
@@ -324,7 +327,7 @@ def _parse_lot_return(lote):
     return data
 
 
-def parse_return(xml_content):
+def parse_return(xml_content: bytes | str | None) -> dict[str, Any]:
     """Normalize a lot or event return into a stable dictionary.
 
     A lot envelope exposes only lot fields at the top level
@@ -334,7 +337,7 @@ def parse_return(xml_content):
     ``seqEvento``, ``perApur``, ``extract`` (D-9001), ``totals``
     (D-9101 / D-9106), ``taxes`` (D-9199) and ``ocorrencias``.
     """
-    root = fromstring(xml_content)
+    root = fromstring(xml_content or "")
     lote = _lot_node(root)
     if lote is not None:
         return _parse_lot_return(lote)

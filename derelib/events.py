@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from importlib import import_module
+from typing import Any
 
 EVENT_D1001 = "D-1001"
 EVENT_D1011 = "D-1011"
@@ -100,18 +101,18 @@ _RETURN_BINDING_MODULE = {
 }
 
 
-def _binding(event_type: str, modules: dict, kind: str):
+def _binding(event_type: str, modules: dict[str, str], kind: str) -> type[Any]:
     module_name = modules.get(event_type)
     if not module_name:
         raise ValueError(f"Unknown DeRE {kind} type {event_type}")
     return import_module(module_name).DeRe
 
 
-def event_binding(event_type: str):
+def event_binding(event_type: str) -> type[Any]:
     """Return the generated root class for a production DeRE event type."""
     return _binding(event_type, _BINDING_MODULE, "event")
 
 
-def return_binding(event_type: str):
+def return_binding(event_type: str) -> type[Any]:
     """Return the generated root class for a D-9xxx return type."""
     return _binding(event_type, _RETURN_BINDING_MODULE, "return")

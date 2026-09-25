@@ -313,7 +313,7 @@ python -m venv .venv
 ```
 
 The `dev` extra installs `pre-commit`, `mypy` and the test dependencies.
-Use `".[test]"` when you only need pytest.
+Use `".[test]"` when you only need pytest. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Anonymized golden fixtures live in `tests/samples/v1_2_0/`. Coverage of
 generated bindings is omitted; the project threshold is 90% on the hand-written

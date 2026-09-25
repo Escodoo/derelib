@@ -4,8 +4,10 @@ from __future__ import annotations
 
 from functools import cache
 from pathlib import Path
+from typing import Any
 
 from lxml import etree
+from lxml.etree import _Element
 
 from derelib.events import (
     DS_NS,
@@ -36,16 +38,16 @@ PLACEHOLDER_SIGNATURE = (
 
 
 @cache
-def _schema(filename):
+def _schema(filename: str) -> etree.XMLSchema:
     path = SCHEMA_DIR / filename
     return etree.XMLSchema(etree.parse(str(path), xml_parser()))
 
 
-def _error_messages(error_log):
+def _error_messages(error_log: Any) -> list[str]:
     return [f"{error.path}: {error.message}" for error in error_log]
 
 
-def _with_placeholder_signature(root):
+def _with_placeholder_signature(root: _Element) -> _Element:
     if root.find(f"{{{DS_NS}}}Signature") is not None:
         return root
     clone = fromstring(etree.tostring(root))
@@ -53,7 +55,7 @@ def _with_placeholder_signature(root):
     return clone
 
 
-def _validate_tree(root, filename, signed=False):
+def _validate_tree(root: _Element, filename: str, signed: bool = False) -> list[str]:
     if not signed:
         root = _with_placeholder_signature(root)
     schema = _schema(filename)
@@ -62,12 +64,16 @@ def _validate_tree(root, filename, signed=False):
     return _error_messages(schema.error_log)
 
 
-def validate_against_schema(xml_content, schema_path, signed=False):
+def validate_against_schema(
+    xml_content: bytes | str, schema_path: str, signed: bool = False
+) -> list[str]:
     """Validate XML against an XSD path. Used by generated root classes."""
     return _validate_tree(fromstring(xml_content), Path(schema_path).name, signed)
 
 
-def validate(xml_content, event_type, signed=False):
+def validate(
+    xml_content: bytes | str, event_type: str, signed: bool = False
+) -> list[str]:
     """Validate an event or D-9xxx return XML.
 
     Returns an empty list when the payload is valid.
@@ -78,12 +84,12 @@ def validate(xml_content, event_type, signed=False):
     return _validate_tree(fromstring(xml_content), filename, signed)
 
 
-def validate_lote(xml_content):
+def validate_lote(xml_content: bytes | str) -> list[str]:
     """Validate a lot envelope against envioLoteDere."""
     return _validate_tree(fromstring(xml_content), LOTE_SCHEMA, signed=True)
 
 
-def validate_return(xml_content):
+def validate_return(xml_content: bytes | str) -> list[str] | None:
     """Validate a D-9xxx or lot return against its official XSD.
 
     Returns ``None`` when the payload is not a ``DeRE`` root in a known

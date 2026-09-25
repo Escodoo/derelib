@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from lxml import etree
 
 from derelib.events import LOTE_NAMESPACE
 from derelib.xml import fromstring
 
 
-def build_lote(nr_insc, events):
+def build_lote(nr_insc: str, events: list[dict[str, Any]]) -> str:
     """Build a lot envelope.
 
     Each item in ``events`` is ``{"id": event_id, "xml": signed_or_raw_xml}``.

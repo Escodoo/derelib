@@ -108,6 +108,14 @@ omit = [
     "derelib/bindings/*",
 ]
 
+[tool.mypy]
+python_version = "3.10"
+files = ["derelib"]
+exclude = ["derelib/bindings"]
+check_untyped_defs = true
+warn_unused_ignores = true
+ignore_missing_imports = true
+
 [tool.coverage.report]
 exclude_lines = [
     "pragma: no cover",

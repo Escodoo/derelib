@@ -24,7 +24,7 @@ class DereMixin:
         return parser.from_string(xml, cls)
 
     @classmethod
-    def from_path(cls, path: str) -> Any:
+    def from_path(cls, path: str | Path) -> Any:
         """Parse XML at the given path and return an instance of the class."""
         return cls.from_xml(Path(path).read_text(encoding="utf-8"))
 

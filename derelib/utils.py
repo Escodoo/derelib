@@ -13,7 +13,9 @@ _CNPJ_ROOT_RE = re.compile(r"^[0-9A-Z]{8}$")
 _FRACTION_RE = re.compile(r"\.(\d+)")
 
 
-def format_amount(value, signed=False):
+def format_amount(
+    value: Decimal | float | int | str | None, signed: bool = False
+) -> str:
     """Format a monetary value with NBR 5891 half-even rounding (2 decimals)."""
     quantize = Decimal("0.01")
     amount = Decimal(str(value or 0)).quantize(quantize, rounding=ROUND_HALF_EVEN)
@@ -24,7 +26,7 @@ def format_amount(value, signed=False):
     return f"{amount.copy_abs():.2f}"
 
 
-def parse_datetime(value):
+def parse_datetime(value: str | None) -> datetime | None:
     """Return an aware datetime from a DeRE xs:dateTime string.
 
     Official returns use seven fractional digits. Values without a
@@ -45,7 +47,7 @@ def parse_datetime(value):
     return moment
 
 
-def make_event_id(event_type, nr_insc, moment, seq):
+def make_event_id(event_type: str, nr_insc: str, moment: datetime, seq: int) -> str:
     """Build the official 42-character structured event id.
 
     The host keeps the sequential counter. ``nr_insc`` is the 8-character

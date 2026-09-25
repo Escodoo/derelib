@@ -1,0 +1,21 @@
+name: Feature request
+description: Propose a layout helper or schema update
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What host problem does this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed API or schema change
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        Keep business rules (tpOper, MS1135 / MS1147, transmission) out of
+        derelib. Prefer official XSD fields and stable helpers.
