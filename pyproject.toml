@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.2"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,10 +8,11 @@ description = "derelib: xsdata binding for the Brazilian DeRE layout"
 authors = [
     {name = "Escodoo", email = "contato@escodoo.com.br"},
 ]
-license = {text = "MIT"}
+license = "MIT"
+license-files = ["LICENSE"]
 classifiers = [
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
@@ -26,8 +27,8 @@ classifiers = [
 keywords = ["DeRE", "e-invoicing", "Brazil", "xsdata"]
 requires-python = ">=3.10"
 dependencies = [
-    "lxml",
-    "xsdata",
+    "lxml>=4.8",
+    "xsdata>=24.0",
 ]
 dynamic = ["version"]
 
@@ -38,6 +39,7 @@ content-type = "text/markdown"
 [project.urls]
 Homepage = "https://github.com/Escodoo/derelib"
 Source = "https://github.com/Escodoo/derelib"
+Issues = "https://github.com/Escodoo/derelib/issues"
 Changelog = "https://github.com/Escodoo/derelib/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
@@ -51,10 +53,17 @@ test = [
     "signxml",
     "cryptography",
 ]
+dev = [
+    "pre-commit",
+    "mypy",
+    "pytest",
+    "pytest-cov",
+    "signxml",
+    "cryptography",
+]
 
 [tool.setuptools]
 include-package-data = true
-license-files = ["LICENSE"]
 
 [tool.setuptools.dynamic]
 version = {attr = "derelib.__version__"}
