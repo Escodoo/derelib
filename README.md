@@ -33,10 +33,11 @@ belong in the application that uses `derelib`.
 
 ```bash
 pip install derelib
-pip install derelib[sign]   # XML-DSig helpers (signxml)
+pip install "derelib[sign]"   # XML-DSig helpers (signxml)
 ```
 
-Requires Python 3.10+. Runtime dependencies are `lxml` and `xsdata`. Signing
+Quote the extra in zsh (and other shells that glob `[]`). Requires Python
+3.10+. Runtime dependencies are `lxml>=4.8` and `xsdata>=24.0`. Signing
 needs the optional `sign` extra (`signxml`, `cryptography`).
 
 ## Scope
@@ -52,22 +53,23 @@ needs the optional `sign` extra (`signxml`, `cryptography`).
 
 Production helpers today:
 
-| Type   | Schema               | Binding helper                 |
-| ------ | -------------------- | ------------------------------ |
-| D-1001 | `evtInfoContrib`     | `event_binding("D-1001")`      |
-| D-1011 | `evtPGCC`            | `event_binding("D-1011")`      |
-| D-1101 | `evtBalancete`       | `event_binding("D-1101")`      |
-| D-1106 | `evtAplicResTec`     | `event_binding("D-1106")`      |
-| D-1121 | `evtRelDeducoes`     | `event_binding("D-1121")`      |
-| D-1198 | `evtReabertMensal`   | `event_binding("D-1198")`      |
-| D-1199 | `evtFechMensal`      | `event_binding("D-1199")`      |
-| lote   | `envioLoteDere`      | `build_lote` / `validate_lote` |
-| D-9001 | `evtRetornoTabela`   | `return_binding("D-9001")`     |
-| D-9101 | `evtRetornoBalan`    | `return_binding("D-9101")`     |
-| D-9106 | `evtRetornoAplicFin` | `return_binding("D-9106")`     |
-| D-9112 | `evtRetornoRDed`     | `return_binding("D-9112")`     |
-| D-9198 | `evtRetornoReabert`  | `return_binding("D-9198")`     |
-| D-9199 | `evtRetornoMensal`   | `return_binding("D-9199")`     |
+| Type        | Schema               | Binding helper                      |
+| ----------- | -------------------- | ----------------------------------- |
+| D-1001      | `evtInfoContrib`     | `event_binding("D-1001")`           |
+| D-1011      | `evtPGCC`            | `event_binding("D-1011")`           |
+| D-1101      | `evtBalancete`       | `event_binding("D-1101")`           |
+| D-1106      | `evtAplicResTec`     | `event_binding("D-1106")`           |
+| D-1121      | `evtRelDeducoes`     | `event_binding("D-1121")`           |
+| D-1198      | `evtReabertMensal`   | `event_binding("D-1198")`           |
+| D-1199      | `evtFechMensal`      | `event_binding("D-1199")`           |
+| lote        | `envioLoteDere`      | `build_lote` / `validate_lote`      |
+| lote return | `retornoLoteDere`    | `return_binding("retornoLoteDere")` |
+| D-9001      | `evtRetornoTabela`   | `return_binding("D-9001")`          |
+| D-9101      | `evtRetornoBalan`    | `return_binding("D-9101")`          |
+| D-9106      | `evtRetornoAplicFin` | `return_binding("D-9106")`          |
+| D-9112      | `evtRetornoRDed`     | `return_binding("D-9112")`          |
+| D-9198      | `evtRetornoReabert`  | `return_binding("D-9198")`          |
+| D-9199      | `evtRetornoMensal`   | `return_binding("D-9199")`          |
 
 D-9121 (`evtRetornoTitPub`) and D-9209 (`evtRetornoTransac`) have generated
 bindings and named constants, but they are **not** validated as production
@@ -100,7 +102,9 @@ Every generated root class is a `DeRe` dataclass mixed with `DereMixin`
 ### Build an event
 
 ```python
-from derelib import event_binding
+from datetime import datetime, timezone
+
+from derelib import event_binding, make_event_id
 from derelib.bindings.v1_2_0.evt_fech_mensal_v0_0_2 import (
     IdeEventoAplicEmi,
     IdeEventoTpAmb,
@@ -108,9 +112,12 @@ from derelib.bindings.v1_2_0.evt_fech_mensal_v0_0_2 import (
 )
 
 DeRe = event_binding("D-1199")
+event_id = make_event_id(
+    "D-1199", "00000000", datetime(2026, 9, 24, 16, 25, 7, tzinfo=timezone.utc), 1
+)
 event = DeRe(
     evtFechMensal=DeRe.EvtFechMensal(
-        id="DeRE11991000000000000002026092416250700001",
+        id=event_id,
         ideEvento=DeRe.EvtFechMensal.IdeEvento(
             tpOper=IdeEventoTpOper.VALUE_1,
             tpAmb=IdeEventoTpAmb.VALUE_2,
@@ -134,12 +141,13 @@ validate(xml, "D-1199")  # unsigned: placeholder Signature is injected
 validate(signed_xml, "D-1199", signed=True)
 validate(return_xml, "D-9101")  # outgoing and D-9xxx share this helper
 validate_lote(lote_xml)
-validate_return(return_xml)  # None if the root is not a known return
+validate_return(return_xml)  # [] for D-9xxx or retornoLoteDere
 ```
 
 `validate` / `validate_lote` / `validate_xml` return a list of XSD error
 strings (empty means valid). `validate_return` returns `None` when the payload
-is not a `DeRE` root in a known return namespace.
+is not a `DeRE` root in a known return namespace (including
+`retornoLoteDere`).
 
 ### Sign and assemble a lot
 
@@ -168,7 +176,9 @@ original signed string to `build_lote`; do not reserialize it.
 from derelib import parse_return, return_binding, validate_return
 
 payload = parse_return(response_xml)
-payload["cdResposta"]  # lot status, when the envelope is a lot return
+payload["cdResposta"]  # lot status only; None on a single D-9xxx
+payload["protocolo"]
+payload["dhProcessamento"]
 payload["events"][0]["nrRecibo"]
 payload["events"][0]["ocorrencias"]
 
@@ -193,18 +203,23 @@ Header fields such as `nrRecibo` are read from `ideStatus` / `infoRecEv` only.
 D-9001 repeats `nrRecibo` inside `extratoEventos`; that copy is **not** used
 as the event receipt.
 
-Values stay strings. Comparing RFB totals to a local trial balance is a host
-job.
+Values stay strings (`None` when absent). Comparing RFB totals to a local
+trial balance is a host job. A lot envelope never copies `cdRetorno` or
+`nrRecibo` to the top level; those keys stay inside `events`.
 
 ## `parse_return` dictionary
 
 Top-level keys (lot envelope, or a single D-9xxx wrapped as one event):
 
-| Key            | Meaning                              |
-| -------------- | ------------------------------------ |
-| `cdResposta`   | Lot status code (`None` when absent) |
-| `descResposta` | Lot status text                      |
-| `events`       | List of per-event dictionaries       |
+| Key               | Meaning                              |
+| ----------------- | ------------------------------------ |
+| `cdResposta`      | Lot status code (`None` when absent) |
+| `descResposta`    | Lot status text                      |
+| `protocolo`       | Lot reception protocol               |
+| `dhRecepcao`      | Lot reception timestamp              |
+| `dhProcessamento` | Lot processing timestamp             |
+| `ocorrencias`     | Lot-level occurrences only           |
+| `events`          | List of per-event dictionaries       |
 
 Each event (and the top level when a single return is parsed) includes:
 
@@ -241,6 +256,18 @@ format_amount(-1.5)  # "1.50"
 format_amount(-1.5, signed=True)  # "-1.50"
 ```
 
+Official returns use seven fractional digits. `parse_datetime` keeps the
+timezone (naive values become UTC):
+
+```python
+from derelib import parse_datetime
+
+parse_datetime("2026-12-05T12:00:00.1234567-03:00")
+```
+
+`make_event_id(event_type, nr_insc, moment, seq)` builds the 42-character
+structured id. The host owns the sequential counter.
+
 ## Public API
 
 Imported from `derelib`:
@@ -255,6 +282,8 @@ Imported from `derelib`:
 | `build_lote(nr_insc, events)`   | Lot envelope; inner XML inserted as-is      |
 | `parse_return(xml)`             | Stable dict for lot and D-9xxx returns      |
 | `format_amount(value, signed=)` | NBR 5891 half-even, 2 decimals              |
+| `parse_datetime(value)`         | Aware datetime from official `xs:dateTime`  |
+| `make_event_id(...)`            | 42-character structured event id            |
 | `EVENT_*` / `RETURN_*`          | Official type strings                       |
 
 Signing helpers live in `derelib.signing` (`sign_event`,
@@ -277,11 +306,14 @@ unsigned drafts can be built before signing.
 
 ```bash
 python -m venv .venv
-.venv/bin/pip install -e ".[test]"
+.venv/bin/pip install -e ".[dev]"
 .venv/bin/pre-commit install
 .venv/bin/pytest
 .venv/bin/pre-commit run --all-files
 ```
+
+The `dev` extra installs `pre-commit`, `mypy` and the test dependencies.
+Use `".[test]"` when you only need pytest.
 
 Anonymized golden fixtures live in `tests/samples/v1_2_0/`. Coverage of
 generated bindings is omitted; the project threshold is 90% on the hand-written
