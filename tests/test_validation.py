@@ -71,4 +71,6 @@ def test_parser_does_not_expand_entities():
         ".//{http://www.dere.gov.br/schemas/evtRetornoTabela/v1_0_1}cdRetorno"
     )
     assert not (node.text or "").startswith("AAAAAAAAAA")
-    assert parse_return(xxe)["cdRetorno"] != "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    parsed = parse_return(xxe)
+    assert parsed["cdRetorno"] != "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    assert parsed["cdRetorno"] in (None, "&b;", "b")

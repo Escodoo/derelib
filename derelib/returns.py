@@ -71,6 +71,9 @@ RETURN_GAP_FIELDS = ("iniLacuna", "fimLacuna")
 
 
 def _localname(element):
+    tag = getattr(element, "tag", None)
+    if not isinstance(tag, str):
+        return ""
     return etree.QName(element).localname
 
 
