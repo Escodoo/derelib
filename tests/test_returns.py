@@ -10,8 +10,8 @@ def test_parse_lote_return():
     data = parse_return(sample_xml("retorno_lote.xml"))
     assert data["cdResposta"] == "2"
     assert data["descResposta"] == "Processado"
-    assert data["cdRetorno"] is False
-    assert data["nrRecibo"] is False
+    assert data["cdRetorno"] is None
+    assert data["nrRecibo"] is None
     assert data["events"]
     assert data["events"][0]["cdRetorno"] == "1"
     assert data["events"][0]["tpEv"] == "D-1001"
@@ -61,8 +61,8 @@ def test_parse_lote_return_keeps_event_fields_nested():
     assert data["dhRecepcao"] == "2026-12-05T12:00:00"
     assert data["dhProcessamento"] == "2026-12-05T12:00:01"
     assert data["ocorrencias"][0]["codigo"] == "7"
-    assert data["cdRetorno"] is False
-    assert data["nrRecibo"] is False
+    assert data["cdRetorno"] is None
+    assert data["nrRecibo"] is None
     assert [event["id"] for event in data["events"]] == ["A", "B"]
     assert data["events"][0]["nrRecibo"] == "1001-A"
     assert data["events"][0]["cdRetorno"] == "1"
@@ -117,6 +117,8 @@ def test_parse_d9101_totals():
 def test_parse_d9106_total():
     data = parse_return(sample_xml("retorno_d9106.xml"))
     assert data["totals"] == [{"vApurTot": "80.00"}]
+    assert data["protocolo"] is None
+    assert data["cdResposta"] is None
 
 
 def test_parse_d9199_taxes():

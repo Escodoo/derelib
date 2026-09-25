@@ -200,11 +200,11 @@ job.
 
 Top-level keys (lot envelope, or a single D-9xxx wrapped as one event):
 
-| Key            | Meaning                               |
-| -------------- | ------------------------------------- |
-| `cdResposta`   | Lot status code (`False` when absent) |
-| `descResposta` | Lot status text                       |
-| `events`       | List of per-event dictionaries        |
+| Key            | Meaning                              |
+| -------------- | ------------------------------------ |
+| `cdResposta`   | Lot status code (`None` when absent) |
+| `descResposta` | Lot status text                      |
+| `events`       | List of per-event dictionaries       |
 
 Each event (and the top level when a single return is parsed) includes:
 

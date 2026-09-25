@@ -92,7 +92,7 @@ def _path(element, *names):
 def _path_text(element, *names):
     element = _path(element, *names)
     if element is None or not element.text:
-        return False
+        return None
     return element.text.strip()
 
 
@@ -185,21 +185,21 @@ def _lot_node(root):
 
 def _empty_event():
     return {
-        "id": False,
-        "cdRetorno": False,
-        "descRetorno": False,
-        "nrRecibo": False,
-        "protocoloLote": False,
-        "protocolo": False,
-        "tpEv": False,
-        "hash": False,
-        "seqEvento": False,
-        "dhRecepcao": False,
-        "dhProcess": False,
-        "returnTag": False,
-        "xml": False,
-        "perApur": False,
-        "nrReciboPGCC": False,
+        "id": None,
+        "cdRetorno": None,
+        "descRetorno": None,
+        "nrRecibo": None,
+        "protocoloLote": None,
+        "protocolo": None,
+        "tpEv": None,
+        "hash": None,
+        "seqEvento": None,
+        "dhRecepcao": None,
+        "dhProcess": None,
+        "returnTag": None,
+        "xml": None,
+        "perApur": None,
+        "nrReciboPGCC": None,
         "totals": [],
         "taxes": {"lines": [], "total": {}},
         "receipts": {},
@@ -306,7 +306,7 @@ def _parse_lot_return(lote):
     data = _empty_event()
     data.update(
         {
-            "id": lote.get("id") or False,
+            "id": lote.get("id") or None,
             "cdResposta": _path_text(status, "cdResposta"),
             "descResposta": _path_text(status, "descResposta"),
             "protocolo": _path_text(recepcao, "protocolo"),
@@ -340,9 +340,9 @@ def parse_return(xml_content):
     event = _parse_event_return(root)
     data = dict(
         event,
-        cdResposta=False,
-        descResposta=False,
-        dhProcessamento=False,
+        cdResposta=None,
+        descResposta=None,
+        dhProcessamento=None,
         events=[],
     )
     if event.get("cdRetorno"):
