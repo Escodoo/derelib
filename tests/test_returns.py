@@ -10,10 +10,64 @@ def test_parse_lote_return():
     data = parse_return(sample_xml("retorno_lote.xml"))
     assert data["cdResposta"] == "2"
     assert data["descResposta"] == "Processado"
+    assert data["cdRetorno"] is False
+    assert data["nrRecibo"] is False
     assert data["events"]
     assert data["events"][0]["cdRetorno"] == "1"
     assert data["events"][0]["tpEv"] == "D-1001"
     assert data["events"][0]["nrRecibo"].startswith("1001-")
+
+
+def test_parse_lote_return_keeps_event_fields_nested():
+    xml = """<DeRE xmlns="http://www.dere.gov.br/schemas/retornoLoteDere/v1_0_1">
+      <retornoLoteEventos id="IDLOTE1">
+        <status>
+          <cdResposta>3</cdResposta>
+          <descResposta>Processado com erro</descResposta>
+          <ocorrencias>
+            <ocorrencia>
+              <codigo>7</codigo>
+              <descricao>Lot warning</descricao>
+            </ocorrencia>
+          </ocorrencias>
+        </status>
+        <dadosRecepcaoLote>
+          <dhRecepcao>2026-12-05T12:00:00</dhRecepcao>
+          <protocolo>2.000001.1</protocolo>
+        </dadosRecepcaoLote>
+        <dadosProcessamentoLote>
+          <dhProcessamento>2026-12-05T12:00:01</dhProcessamento>
+        </dadosProcessamentoLote>
+        <retornoEventos>
+          <evento id="A">
+            <evtRetornoTabela xmlns="http://www.dere.gov.br/schemas/evtRetornoTabela/v1_0_1">
+              <ideStatus><cdRetorno>1</cdRetorno><descRetorno>Sucesso</descRetorno></ideStatus>
+              <infoRecEv><nrRecibo>1001-A</nrRecibo><tpEv>D-1001</tpEv></infoRecEv>
+            </evtRetornoTabela>
+          </evento>
+          <evento id="B">
+            <evtRetornoTabela xmlns="http://www.dere.gov.br/schemas/evtRetornoTabela/v1_0_1">
+              <ideStatus><cdRetorno>0</cdRetorno><descRetorno>Erro</descRetorno></ideStatus>
+              <ocorrencias><codigo>12</codigo><descricao>x</descricao></ocorrencias>
+            </evtRetornoTabela>
+          </evento>
+        </retornoEventos>
+      </retornoLoteEventos>
+    </DeRE>"""
+    data = parse_return(xml)
+    assert data["id"] == "IDLOTE1"
+    assert data["cdResposta"] == "3"
+    assert data["protocolo"] == "2.000001.1"
+    assert data["dhRecepcao"] == "2026-12-05T12:00:00"
+    assert data["dhProcessamento"] == "2026-12-05T12:00:01"
+    assert data["ocorrencias"][0]["codigo"] == "7"
+    assert data["cdRetorno"] is False
+    assert data["nrRecibo"] is False
+    assert [event["id"] for event in data["events"]] == ["A", "B"]
+    assert data["events"][0]["nrRecibo"] == "1001-A"
+    assert data["events"][0]["cdRetorno"] == "1"
+    assert data["events"][1]["cdRetorno"] == "0"
+    assert data["events"][1]["ocorrencias"][0]["codigo"] == "12"
 
 
 def test_parse_event_return_with_occurrences():

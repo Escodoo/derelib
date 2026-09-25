@@ -175,28 +175,16 @@ def _return_node(root):
     return None
 
 
-def _occurrence_vals(element):
-    occurrence = {}
-    for child in element:
-        occurrence[_localname(child)] = (child.text or "").strip()
-    return occurrence
+def _lot_node(root):
+    if _localname(root) == "retornoLoteEventos":
+        return root
+    if _localname(root) == "DeRE":
+        return _child(root, "retornoLoteEventos")
+    return None
 
 
-def _read_return_header(node, data):
-    # D-9001 repeats nrRecibo inside extratoEventos, so the header must be
-    # read from its own groups only.
-    for group, names in RETURN_HEADER.items():
-        parent = _child(node, group)
-        source = parent if parent is not None else node
-        for name in names:
-            element = _child(source, name)
-            if element is not None and element.text:
-                data[name] = element.text.strip()
-    return data
-
-
-def _parse_event_return(root):
-    data = {
+def _empty_event():
+    return {
         "id": False,
         "cdRetorno": False,
         "descRetorno": False,
@@ -218,6 +206,30 @@ def _parse_event_return(root):
         "extract": {},
         "ocorrencias": [],
     }
+
+
+def _occurrence_vals(element):
+    occurrence = {}
+    for child in element:
+        occurrence[_localname(child)] = (child.text or "").strip()
+    return occurrence
+
+
+def _read_return_header(node, data):
+    # D-9001 repeats nrRecibo inside extratoEventos, so the header must be
+    # read from its own groups only.
+    for group, names in RETURN_HEADER.items():
+        parent = _child(node, group)
+        source = parent if parent is not None else node
+        for name in names:
+            element = _child(source, name)
+            if element is not None and element.text:
+                data[name] = element.text.strip()
+    return data
+
+
+def _parse_event_return(root):
+    data = _empty_event()
     envelope = root
     node = _return_node(root)
     if node is not None:
@@ -265,32 +277,74 @@ def _parse_event_return(root):
     return data
 
 
+def _lot_ocorrencias(status):
+    wrapper = _child(status, "ocorrencias")
+    if wrapper is None:
+        return []
+    occurrences = []
+    for element in _children(wrapper, "ocorrencia"):
+        occurrence = _occurrence_vals(element)
+        if occurrence:
+            occurrences.append(occurrence)
+    if occurrences:
+        return occurrences
+    occurrence = _occurrence_vals(wrapper)
+    return [occurrence] if occurrence and "codigo" in occurrence else []
+
+
+def _parse_lot_return(lote):
+    """Keep only lot-envelope fields at the top level."""
+    status = _child(lote, "status")
+    recepcao = _child(lote, "dadosRecepcaoLote")
+    processamento = _child(lote, "dadosProcessamentoLote")
+    events = []
+    for evento in _children(_child(lote, "retornoEventos"), "evento"):
+        inner = next((child for child in evento.iterchildren(tag=etree.Element)), None)
+        parsed = _parse_event_return(inner if inner is not None else evento)
+        parsed["id"] = evento.get("id") or parsed.get("id")
+        events.append(parsed)
+    data = _empty_event()
+    data.update(
+        {
+            "id": lote.get("id") or False,
+            "cdResposta": _path_text(status, "cdResposta"),
+            "descResposta": _path_text(status, "descResposta"),
+            "protocolo": _path_text(recepcao, "protocolo"),
+            "dhRecepcao": _path_text(recepcao, "dhRecepcao"),
+            "dhProcessamento": _path_text(processamento, "dhProcessamento"),
+            "ocorrencias": _lot_ocorrencias(status),
+            "events": events,
+        }
+    )
+    return data
+
+
 def parse_return(xml_content):
     """Normalize a lot or event return into a stable dictionary.
 
-    Keys include the lot status (``cdResposta``, ``descResposta``,
-    ``events``) and, for each D-9xxx payload, ``seqEvento``, ``perApur``,
-    ``extract`` (D-9001), ``totals`` (D-9101 / D-9106), ``taxes`` (D-9199)
-    and ``ocorrencias``.
+    A lot envelope exposes only lot fields at the top level
+    (``cdResposta``, ``descResposta``, ``protocolo``, ``dhRecepcao``,
+    ``dhProcessamento``, lot ``ocorrencias`` and ``events``). Event
+    fields stay inside ``events``. A single D-9xxx payload also fills
+    ``seqEvento``, ``perApur``, ``extract`` (D-9001), ``totals``
+    (D-9101 / D-9106), ``taxes`` (D-9199) and ``ocorrencias``.
     """
     if isinstance(xml_content, bytes):
         payload = xml_content
     else:
         payload = (xml_content or "").encode("utf-8")
     root = etree.fromstring(payload)
+    lote = _lot_node(root)
+    if lote is not None:
+        return _parse_lot_return(lote)
     event = _parse_event_return(root)
-    data = dict(event, cdResposta=False, descResposta=False, events=[])
-    for element in root.iter():
-        name = _localname(element)
-        if name in ("cdResposta", "descResposta") and element.text:
-            data[name] = element.text.strip()
-        elif name == "evento" and element.getparent() is not None:
-            parent = _localname(element.getparent())
-            if parent == "retornoEventos":
-                inner = next(iter(element), None)
-                parsed = _parse_event_return(inner if inner is not None else element)
-                parsed["id"] = element.get("id") or parsed.get("id")
-                data["events"].append(parsed)
-    if not data["events"] and data.get("cdRetorno"):
+    data = dict(
+        event,
+        cdResposta=False,
+        descResposta=False,
+        dhProcessamento=False,
+        events=[],
+    )
+    if event.get("cdRetorno"):
         data["events"] = [event]
     return data
