@@ -19,6 +19,7 @@ RETURN_D9121 = "D-9121"
 RETURN_D9198 = "D-9198"
 RETURN_D9199 = "D-9199"
 RETURN_D9209 = "D-9209"
+RETURN_LOTE = "retornoLoteDere"
 
 EVENT_SCHEMA = {
     EVENT_D1001: "evtInfoContrib-v1_0_1.xsd",
@@ -42,9 +43,12 @@ EVENT_NAMESPACE = {
 
 LOTE_SCHEMA = "envioLoteDere-v1_0_1.xsd"
 LOTE_NAMESPACE = "http://www.dere.gov.br/schemas/envioLoteDere/v1_0_1"
+LOTE_RETURN_SCHEMA = "retornoLoteDere-v1_0_1.xsd"
+LOTE_RETURN_NAMESPACE = "http://www.dere.gov.br/schemas/retornoLoteDere/v1_0_1"
 DS_NS = "http://www.w3.org/2000/09/xmldsig#"
 
 RETURN_SCHEMA = {
+    RETURN_LOTE: LOTE_RETURN_SCHEMA,
     RETURN_D9001: "evtRetornoTabela-v1_0_1.xsd",
     RETURN_D9101: "evtRetornoBalan-v1_0_0.xsd",
     RETURN_D9106: "evtRetornoAplicFin-v1_0_0.xsd",
@@ -56,6 +60,7 @@ RETURN_SCHEMA = {
 }
 
 RETURN_NAMESPACE = {
+    RETURN_LOTE: LOTE_RETURN_NAMESPACE,
     RETURN_D9001: "http://www.dere.gov.br/schemas/evtRetornoTabela/v1_0_1",
     RETURN_D9101: "http://www.dere.gov.br/schemas/evtRetornoBalan/v1_0_0",
     RETURN_D9106: "http://www.dere.gov.br/schemas/evtRetornoAplicFin/v1_0_0",
@@ -83,6 +88,7 @@ _BINDING_MODULE = {
 
 
 _RETURN_BINDING_MODULE = {
+    RETURN_LOTE: "derelib.bindings.v1_2_0.retorno_lote_dere_v1_0_1",
     RETURN_D9001: "derelib.bindings.v1_2_0.evt_retorno_tabela_v1_0_1",
     RETURN_D9101: "derelib.bindings.v1_2_0.evt_retorno_balan_v1_0_0",
     RETURN_D9106: "derelib.bindings.v1_2_0.evt_retorno_aplic_fin_v1_0_0",
@@ -94,18 +100,18 @@ _RETURN_BINDING_MODULE = {
 }
 
 
-def _binding(event_type: str, modules: dict):
+def _binding(event_type: str, modules: dict, kind: str):
     module_name = modules.get(event_type)
     if not module_name:
-        raise ValueError(f"Unknown DeRE event type {event_type}")
+        raise ValueError(f"Unknown DeRE {kind} type {event_type}")
     return import_module(module_name).DeRe
 
 
 def event_binding(event_type: str):
     """Return the generated root class for a production DeRE event type."""
-    return _binding(event_type, _BINDING_MODULE)
+    return _binding(event_type, _BINDING_MODULE, "event")
 
 
 def return_binding(event_type: str):
     """Return the generated root class for a D-9xxx return type."""
-    return _binding(event_type, _RETURN_BINDING_MODULE)
+    return _binding(event_type, _RETURN_BINDING_MODULE, "return")

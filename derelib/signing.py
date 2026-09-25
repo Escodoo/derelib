@@ -51,7 +51,8 @@ def sign_event(xml_content, key, cert_pem, reference):
         reference_uri=f"#{reference}",
         id_attribute="id",
     )
-    event_node = signed_root.find(f".//*[@id='{reference}']")
+    matches = signed_root.xpath(".//*[@id=$ref]", ref=reference)
+    event_node = matches[0] if matches else None
     signature = signed_root.find(f".//{{{DS_NS}}}Signature")
     if event_node is not None and signature is not None:
         parent = event_node.getparent()

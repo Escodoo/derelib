@@ -1,12 +1,14 @@
 import pytest
 
-from derelib.events import RETURN_D9101, return_binding
+from derelib.events import RETURN_D9101, RETURN_LOTE, return_binding
 from derelib.returns import parse_return
 from derelib.validation import validate, validate_against_schema, validate_return
 from tests.helpers import sample_xml
 
 
 def test_lote_return_matches_xsd():
+    assert validate_return(sample_xml("retorno_lote.xml")) == []
+    assert validate(sample_xml("retorno_lote.xml"), "retornoLoteDere") == []
     errors = validate_against_schema(
         sample_xml("retorno_lote.xml"),
         "retornoLoteDere-v1_0_1.xsd",
@@ -155,10 +157,13 @@ def test_return_binding_roundtrip():
     parsed = cls.from_xml(sample_xml("retorno_d9101.xml"))
     assert parsed.evtRetornoBalan.ideContrib.nrInsc == "00000000"
     assert parsed.evtRetornoBalan.infoEvento.idePeriodo.perApur == "2026-10"
+    lote_cls = return_binding(RETURN_LOTE)
+    lote = lote_cls.from_xml(sample_xml("retorno_lote.xml"))
+    assert lote.retornoLoteEventos.status.cdResposta == 2
 
 
 def test_unknown_return_binding():
-    with pytest.raises(ValueError, match="Unknown DeRE event type"):
+    with pytest.raises(ValueError, match="Unknown DeRE return type"):
         return_binding("D-9999")
 
 

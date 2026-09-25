@@ -16,12 +16,13 @@ from derelib.events import (
     RETURN_D9198,
     RETURN_D9199,
     RETURN_D9209,
+    RETURN_LOTE,
     event_binding,
     return_binding,
 )
 from derelib.lote import build_lote
 from derelib.returns import parse_return
-from derelib.utils import format_amount
+from derelib.utils import format_amount, make_event_id, parse_datetime
 from derelib.validation import validate, validate_lote, validate_return
 
 __version__ = "0.1.0"
@@ -42,10 +43,13 @@ __all__ = [
     "RETURN_D9198",
     "RETURN_D9199",
     "RETURN_D9209",
+    "RETURN_LOTE",
     "__version__",
     "build_lote",
     "event_binding",
     "format_amount",
+    "make_event_id",
+    "parse_datetime",
     "parse_return",
     "return_binding",
     "validate",

@@ -53,15 +53,18 @@ def _with_placeholder_signature(root):
     return clone
 
 
-def validate_against_schema(xml_content, schema_path, signed=False):
-    """Validate XML against an XSD path. Used by generated root classes."""
-    root = fromstring(xml_content)
+def _validate_tree(root, filename, signed=False):
     if not signed:
         root = _with_placeholder_signature(root)
-    schema = _schema(Path(schema_path).name)
+    schema = _schema(filename)
     if schema.validate(root):
         return []
     return _error_messages(schema.error_log)
+
+
+def validate_against_schema(xml_content, schema_path, signed=False):
+    """Validate XML against an XSD path. Used by generated root classes."""
+    return _validate_tree(fromstring(xml_content), Path(schema_path).name, signed)
 
 
 def validate(xml_content, event_type, signed=False):
@@ -72,26 +75,16 @@ def validate(xml_content, event_type, signed=False):
     filename = EVENT_SCHEMA.get(event_type) or RETURN_SCHEMA.get(event_type)
     if not filename:
         raise ValueError(f"Unknown DeRE event type {event_type}")
-    root = fromstring(xml_content)
-    if not signed:
-        root = _with_placeholder_signature(root)
-    schema = _schema(filename)
-    if schema.validate(root):
-        return []
-    return _error_messages(schema.error_log)
+    return _validate_tree(fromstring(xml_content), filename, signed)
 
 
 def validate_lote(xml_content):
     """Validate a lot envelope against envioLoteDere."""
-    root = fromstring(xml_content)
-    schema = _schema(LOTE_SCHEMA)
-    if schema.validate(root):
-        return []
-    return _error_messages(schema.error_log)
+    return _validate_tree(fromstring(xml_content), LOTE_SCHEMA, signed=True)
 
 
 def validate_return(xml_content):
-    """Validate a D-9xxx return against its official XSD.
+    """Validate a D-9xxx or lot return against its official XSD.
 
     Returns ``None`` when the payload is not a ``DeRE`` root in a known
     return namespace, otherwise the list of schema errors.
@@ -101,8 +94,4 @@ def validate_return(xml_content):
     filename = RETURN_SCHEMA_BY_NAMESPACE.get(qname.namespace)
     if qname.localname != "DeRE" or not filename:
         return None
-    root = _with_placeholder_signature(root)
-    schema = _schema(filename)
-    if schema.validate(root):
-        return []
-    return _error_messages(schema.error_log)
+    return _validate_tree(root, filename)
