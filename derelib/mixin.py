@@ -77,4 +77,6 @@ _SCHEMA_BY_MODULE = {
     "evt_retorno_aplic_fin_v1_0_0": "evtRetornoAplicFin-v1_0_0.xsd",
     "evt_retorno_rded_v0_0_1": "evtRetornoRDed-v0_0_1.xsd",
     "evt_retorno_balan_v1_0_0": "evtRetornoBalan-v1_0_0.xsd",
+    "evt_retorno_tit_pub_v0_0_2": "evtRetornoTitPub-v0_0_2.xsd",
+    "evt_retorno_transac_v0_0_1": "evtRetornoTransac-v0_0_1.xsd",
 }

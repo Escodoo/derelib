@@ -1,0 +1,30 @@
+<DeRE xmlns="http://www.dere.gov.br/schemas/evtRetornoTabela/v1_0_1">
+  <evtRetornoTabela id="DeRE10011000000000000002026120512000000001">
+    <ideContrib>
+      <nrInsc>00000000</nrInsc>
+    </ideContrib>
+    <ideStatus>
+      <cdRetorno>1</cdRetorno>
+      <descRetorno>Sucesso</descRetorno>
+    </ideStatus>
+    <infoRecEv>
+      <nrRecibo>1001-202610-0000000000000000000</nrRecibo>
+      <dhRecepcao>2026-12-05T12:00:00.1234567-03:00</dhRecepcao>
+      <dhProcess>2026-12-05T12:00:01.0000000-03:00</dhProcess>
+      <tpEv>D-1001</tpEv>
+      <hash>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</hash>
+    </infoRecEv>
+    <extratoEventos>
+      <detEvento>
+        <nrRecibo>1001-202610-0000000000000000000</nrRecibo>
+        <iniValid>2026-10-01</iniValid>
+        <fimValidEfetiva>2026-10-31</fimValidEfetiva>
+        <indAjusteAuto>1</indAjusteAuto>
+      </detEvento>
+      <detLacuna>
+        <iniLacuna>2026-11-01</iniLacuna>
+        <fimLacuna>2026-11-30</fimLacuna>
+      </detLacuna>
+    </extratoEventos>
+  </evtRetornoTabela>
+</DeRE>

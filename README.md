@@ -31,9 +31,11 @@ pip install derelib[sign]   # XML-DSig helpers (signxml)
 | NBR 5891 amount formatting             | Host-application data models    |
 
 Supported production helpers today: **D-1001, D-1011, D-1101, D-1106,
-D-1121, D-1198, D-1199**, lots and official returns. Transactional events
-(D-22xx / D-32xx) are generated from the XSD but are **not** validated in
-production yet.
+D-1121, D-1198, D-1199**, lots and official returns **D-9001, D-9101,
+D-9106, D-9112, D-9198, D-9199** (`validate_return`, `return_binding`,
+structured `parse_return`). D-9121 / D-9209 and transactional events
+(D-22xx / D-32xx) are generated from the XSD but are **not** validated
+in production yet.
 
 ## Quick start
 

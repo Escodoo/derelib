@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Treat D-9xxx returns as first-class layout helpers: named types,
+  `return_binding`, `validate_return` and structured `parse_return`
+  (`extract`, `totals`, `taxes`).
+
 ## 0.1.0 (2026-09-24)
 
 - First public release: xsdata bindings for DeRE layout 1.2.0.

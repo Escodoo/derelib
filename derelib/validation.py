@@ -7,7 +7,13 @@ from pathlib import Path
 
 from lxml import etree
 
-from derelib.events import DS_NS, EVENT_SCHEMA, LOTE_SCHEMA
+from derelib.events import (
+    DS_NS,
+    EVENT_SCHEMA,
+    LOTE_SCHEMA,
+    RETURN_SCHEMA,
+    RETURN_SCHEMA_BY_NAMESPACE,
+)
 
 SCHEMA_DIR = Path(__file__).resolve().parent / "schemas" / "v1_2_0"
 
@@ -65,8 +71,11 @@ def validate_against_schema(xml_content, schema_path, signed=False):
 
 
 def validate(xml_content, event_type, signed=False):
-    """Validate an event XML. Returns an empty list when the payload is valid."""
-    filename = EVENT_SCHEMA.get(event_type)
+    """Validate an event or D-9xxx return XML.
+
+    Returns an empty list when the payload is valid.
+    """
+    filename = EVENT_SCHEMA.get(event_type) or RETURN_SCHEMA.get(event_type)
     if not filename:
         raise ValueError(f"Unknown DeRE event type {event_type}")
     root = etree.fromstring(_to_bytes(xml_content))
@@ -82,6 +91,24 @@ def validate_lote(xml_content):
     """Validate a lot envelope against envioLoteDere."""
     root = etree.fromstring(_to_bytes(xml_content))
     schema = _schema(LOTE_SCHEMA)
+    if schema.validate(root):
+        return []
+    return _error_messages(schema.error_log)
+
+
+def validate_return(xml_content):
+    """Validate a D-9xxx return against its official XSD.
+
+    Returns ``None`` when the payload is not a ``DeRE`` root in a known
+    return namespace, otherwise the list of schema errors.
+    """
+    root = etree.fromstring(_to_bytes(xml_content))
+    qname = etree.QName(root)
+    filename = RETURN_SCHEMA_BY_NAMESPACE.get(qname.namespace)
+    if qname.localname != "DeRE" or not filename:
+        return None
+    root = _with_placeholder_signature(root)
+    schema = _schema(filename)
     if schema.validate(root):
         return []
     return _error_messages(schema.error_log)

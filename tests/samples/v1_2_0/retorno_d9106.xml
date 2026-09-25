@@ -1,0 +1,30 @@
+<DeRE xmlns="http://www.dere.gov.br/schemas/evtRetornoAplicFin/v1_0_0">
+  <evtRetornoAplicFin id="DeRE11061000000000000002026120512000000001">
+    <ideContrib>
+      <nrInsc>00000000</nrInsc>
+    </ideContrib>
+    <ideStatus>
+      <cdRetorno>1</cdRetorno>
+      <descRetorno>Sucesso</descRetorno>
+    </ideStatus>
+    <infoRecEv>
+      <nrRecibo>1106-202610-0000000000000000000</nrRecibo>
+      <seqEvento>00</seqEvento>
+      <dhRecepcao>2026-12-05T12:00:00.1234567-03:00</dhRecepcao>
+      <dhProcess>2026-12-05T12:00:01.0000000-03:00</dhProcess>
+      <tpEv>D-1106</tpEv>
+      <hash>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</hash>
+    </infoRecEv>
+    <infoEvento>
+      <idePeriodo>
+        <perApur>2026-10</perApur>
+      </idePeriodo>
+      <infoAdic>
+        <nrReciboPGCC>1011-202610-0000000000000000000</nrReciboPGCC>
+      </infoAdic>
+      <infoTotAplicFin>
+        <vApurTot>80.00</vApurTot>
+      </infoTotAplicFin>
+    </infoEvento>
+  </evtRetornoAplicFin>
+</DeRE>
