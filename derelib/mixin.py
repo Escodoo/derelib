@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import warnings
 from pathlib import Path
 from typing import Any
 
@@ -45,7 +46,20 @@ class DereMixin:
         return str(Path(__file__).resolve().parent / "schemas" / "v1_2_0" / filename)
 
     def to_xml(self, indent: str | None = "  ") -> str:
-        """Serialize the binding as XML."""
+        """Serialize the binding as XML.
+
+        Re-serializing a payload that already carries ``ds:Signature``
+        changes the canonical form and invalidates the digest. Signed XML
+        must be treated as opaque; ``build_lote`` inserts it as-is.
+        """
+        if getattr(self, "signature", None) is not None:
+            warnings.warn(
+                "Serializing a signed DeRE binding invalidates the XML-DSig "
+                "digest. Treat signed XML as opaque and pass it to "
+                "build_lote as-is.",
+                UserWarning,
+                stacklevel=2,
+            )
         ns_map = {None: self.Meta.namespace} if hasattr(self, "Meta") else None
         serializer = XmlSerializer(config=SerializerConfig(indent=indent))
         return serializer.render(obj=self, ns_map=ns_map)

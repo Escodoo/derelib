@@ -52,3 +52,13 @@ def test_schema_path_override(tmp_path: Path):
         schema_path = str(SAMPLES / "d1199.xml")
 
     assert Dummy._resolve_schema_path() == Dummy.schema_path
+
+
+def test_to_xml_warns_when_signed(rsa_material):
+    key_pem, cert_pem = rsa_material
+    reference = "DeRE11991000000000000002026092416250700001"
+    parsed = event_binding("D-1199").from_xml(sample_xml("d1199.xml"))
+    signed = parsed.sign_xml(key_pem, cert_pem, reference)
+    signed_obj = event_binding("D-1199").from_xml(signed)
+    with pytest.warns(UserWarning, match="invalidates the XML-DSig"):
+        signed_obj.to_xml()

@@ -158,6 +158,10 @@ attribute **without** the leading `#`. Signing requires `derelib[sign]`.
 `sign_event_with_certificate` accepts an `erpbrasil.assinatura` certificate
 object.
 
+Signed XML is opaque. Calling `to_xml()` on a binding parsed from a signed
+payload invalidates the digest (the method emits a `UserWarning`). Pass the
+original signed string to `build_lote`; do not reserialize it.
+
 ### Parse official returns
 
 ```python
