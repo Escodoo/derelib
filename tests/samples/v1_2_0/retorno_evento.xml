@@ -1,15 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
 <DeRE xmlns="http://www.dere.gov.br/schemas/evtRetornoTabela/v1_0_1">
-  <evtRetornoTabela>
+  <evtRetornoTabela id="DeRE10011000000000000002026120512000000002">
+    <ideContrib>
+      <nrInsc>00000000</nrInsc>
+    </ideContrib>
     <ideStatus>
       <cdRetorno>0</cdRetorno>
       <descRetorno>Erro</descRetorno>
+      <ocorrencias>
+        <codigo>12</codigo>
+        <descricao>Invalid activity</descricao>
+        <tipo>1</tipo>
+        <localizacao>plAssistSaude</localizacao>
+      </ocorrencias>
     </ideStatus>
-    <ocorrencias>
-      <codigo>12</codigo>
-      <descricao>Invalid activity</descricao>
-      <tipo>1</tipo>
-      <localizacao>plAssistSaude</localizacao>
-    </ocorrencias>
+    <infoRecEv>
+      <dhRecepcao>2026-12-05T12:00:00.1234567-03:00</dhRecepcao>
+      <dhProcess>2026-12-05T12:00:01.0000000-03:00</dhProcess>
+      <tpEv>D-1001</tpEv>
+      <hash>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</hash>
+    </infoRecEv>
   </evtRetornoTabela>
 </DeRE>

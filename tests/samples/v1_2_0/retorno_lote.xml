@@ -1,1 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?><DeRE xmlns="http://www.dere.gov.br/schemas/retornoLoteDere/v1_0_1"><retornoLoteEventos><status><cdResposta>2</cdResposta><descResposta>Processado</descResposta></status><dadosRecepcaoLote><protocolo>2.000001.1</protocolo></dadosRecepcaoLote><retornoEventos><evento id="DeRE10011000000000000002026092416100700001"><evtRetornoTabela xmlns="http://www.dere.gov.br/schemas/evtRetornoTabela/v1_0_1"><ideStatus><cdRetorno>1</cdRetorno><descRetorno>Sucesso</descRetorno></ideStatus><infoRecEv><nrRecibo>1001-202610-0000000000000000000</nrRecibo><protocoloLote>2.000001.1</protocoloLote><tpEv>D-1001</tpEv></infoRecEv></evtRetornoTabela></evento></retornoEventos></retornoLoteEventos></DeRE>
+<DeRE xmlns="http://www.dere.gov.br/schemas/retornoLoteDere/v1_0_1">
+  <retornoLoteEventos id="IDLOTE20261000000000000000000000000001">
+    <ideContrib>
+      <nrInsc>00000000</nrInsc>
+    </ideContrib>
+    <ideTransmissor>
+      <niTransmissor>00000000</niTransmissor>
+    </ideTransmissor>
+    <status>
+      <cdResposta>2</cdResposta>
+      <descResposta>Processado</descResposta>
+    </status>
+    <dadosRecepcaoLote>
+      <dhRecepcao>2026-12-05T12:00:00.1234567-03:00</dhRecepcao>
+      <versaoAplicativoRecepcao>derelib-0.1.0</versaoAplicativoRecepcao>
+      <protocolo>2.202610.0000000000000000001</protocolo>
+    </dadosRecepcaoLote>
+    <dadosProcessamentoLote>
+      <dhProcessamento>2026-12-05T12:00:01.0000000-03:00</dhProcessamento>
+      <versaoAplicativoProcessamento>derelib-0.1.0</versaoAplicativoProcessamento>
+    </dadosProcessamentoLote>
+    <retornoEventos>
+      <evento id="DeRE10011000000000000002026092416100700001">
+        <evtRetornoTabela xmlns="http://www.dere.gov.br/schemas/evtRetornoTabela/v1_0_1" id="DeRE10011000000000000002026092416100700001">
+          <ideContrib>
+            <nrInsc>00000000</nrInsc>
+          </ideContrib>
+          <ideStatus>
+            <cdRetorno>1</cdRetorno>
+            <descRetorno>Sucesso</descRetorno>
+          </ideStatus>
+          <infoRecEv>
+            <nrRecibo>1001-202610-0000000000000000000</nrRecibo>
+            <protocoloLote>2.202610.0000000000000000001</protocoloLote>
+            <dhRecepcao>2026-12-05T12:00:00.1234567-03:00</dhRecepcao>
+            <dhProcess>2026-12-05T12:00:01.0000000-03:00</dhProcess>
+            <tpEv>D-1001</tpEv>
+            <hash>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</hash>
+          </infoRecEv>
+        </evtRetornoTabela>
+      </evento>
+    </retornoEventos>
+  </retornoLoteEventos>
+</DeRE>

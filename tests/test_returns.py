@@ -2,8 +2,16 @@ import pytest
 
 from derelib.events import RETURN_D9101, return_binding
 from derelib.returns import parse_return
-from derelib.validation import validate, validate_return
+from derelib.validation import validate, validate_against_schema, validate_return
 from tests.helpers import sample_xml
+
+
+def test_lote_return_matches_xsd():
+    errors = validate_against_schema(
+        sample_xml("retorno_lote.xml"),
+        "retornoLoteDere-v1_0_1.xsd",
+    )
+    assert errors == []
 
 
 def test_parse_lote_return():
@@ -130,6 +138,18 @@ def test_parse_d9199_taxes():
     assert data["taxes"]["total"]["vCBS"] == "9.00"
 
 
+def test_parse_d9112_and_d9198():
+    rded = parse_return(sample_xml("retorno_d9112.xml"))
+    assert rded["returnTag"] == "evtRetornoRDed"
+    assert rded["tpEv"] == "D-1121"
+    assert rded["perApur"] == "2026-10"
+    assert rded["nrReciboPGCC"].startswith("1011-")
+    reabert = parse_return(sample_xml("retorno_d9198.xml"))
+    assert reabert["returnTag"] == "evtRetornoReabert"
+    assert reabert["tpEv"] == "D-1198"
+    assert reabert["perApur"] == "2026-10"
+
+
 def test_return_binding_roundtrip():
     cls = return_binding(RETURN_D9101)
     parsed = cls.from_xml(sample_xml("retorno_d9101.xml"))
@@ -147,7 +167,10 @@ def test_validate_return_samples():
         "retorno_d9001.xml",
         "retorno_d9101.xml",
         "retorno_d9106.xml",
+        "retorno_d9112.xml",
+        "retorno_d9198.xml",
         "retorno_d9199.xml",
+        "retorno_evento.xml",
     ):
         errors = validate_return(sample_xml(name))
         assert errors == [], (name, errors)
